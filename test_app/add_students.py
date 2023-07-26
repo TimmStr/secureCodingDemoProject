@@ -3,27 +3,27 @@ import requests
 from path.paths import Paths
 
 students = [
-    {'firstname': 'Peter', 'lastname': 'Heim', 'birthday': '01-01-1986', 'city': 'Frankfurt'},
-    {'firstname': 'Markus', 'lastname': 'Heinrich', 'birthday': '09-03-1978', 'city': 'Darmstadt'},
-    {'firstname': 'Karl', 'lastname': 'Mustermann', 'birthday': '05-08-1963', 'city': 'Friedberg'},
-    {'firstname': 'Julian', 'lastname': 'Müller', 'birthday': '10-11-1973', 'city': 'Gießen'}
+    {'id': 1, 'firstname': 'Peter', 'lastname': 'Heim', 'birthday': '1986-01-01', 'city': 'Frankfurt'},
+    {'id': 2, 'firstname': 'Markus', 'lastname': 'Heinrich', 'birthday': '1978-09-03', 'city': 'Darmstadt'},
+    {'id': 3, 'firstname': 'Karl', 'lastname': 'Mustermann', 'birthday': '1963-05-08', 'city': 'Friedberg'},
+    {'id': 4, 'firstname': 'Julian', 'lastname': 'Müller', 'birthday': '1973-10-11', 'city': 'Gießen'}
 ]
 
 
-def send_students(list_with_students):
+def insert_students(list_with_students):
     for student in list_with_students:
         print(student)
         response = requests.post(Paths.ADD_STUDENT, data=student)
         print(response.json())
 
 
-# send_students(students)
+# insert_students(students)
 
 
-def get_student_for_lastname(lastname):
-    response = requests.get(Paths.GET_STUDENT+lastname)
+def test_query():
+    # response = requests.get(Paths.DATABASE_QUERY + " SELECT * FROM students")
+    response = requests.get(Paths.DATABASE_ESCAPE_QUERY + " SELECT * FROM students WHERE firstname='Peter'")# OR 1=1")
     print(response.json())
 
 
-get_student_for_lastname('Mustermann')
-get_student_for_lastname('Mustermann OR 1=1;')
+test_query()
